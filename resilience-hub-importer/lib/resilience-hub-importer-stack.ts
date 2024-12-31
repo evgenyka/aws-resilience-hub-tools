@@ -32,7 +32,7 @@ export class ResilienceHubImporterStack extends cdk.Stack {
     }
 
     /**
-     * Create the Resilience Hub application with daily assessment schedule
+     * Create the AWS Resilience Hub application with daily assessment schedule
      * and production environment tag
      */
     const arhApp = new resiliencehub.CfnApp(this, 'ResilienceHubApplication', {
@@ -47,11 +47,13 @@ export class ResilienceHubImporterStack extends cdk.Stack {
       },
     });
 
+    // Set the removal policy for created resileince app to RETAIN
+    arhApp.applyRemovalPolicy(cdk.RemovalPolicy.RETAIN);
+
     /**
      * Create IAM role for custom resources with permissions to:
      * - Import resources to Resilience Hub
      * - Access CloudFormation stack information
-     * - Execute Resilience Hub assessments
      */
     const customResourceRole = new iam.Role(this, 'CustomResourceRole', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
