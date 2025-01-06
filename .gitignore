@@ -9,3 +9,5 @@ node_nodules/
 cdk.out/
 /bin/*.js
 /lib/*.js
+bin/*.d.ts
+lib/*.d.ts
